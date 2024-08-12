@@ -1,0 +1,24 @@
+Lab assignment-1
+1.Write a program in assembly language to print “Hello World”.
+org 100h
+jmp start
+msg: db "Hello, World", 0Dh, 0Ah, 24h
+start: mov dx, msg 
+mov ah, 09h 
+int 21h 
+mov ah, 0 
+int 16h 
+ret
+output: Hello World
+Practice set:
+2. Write an assembly language program to print your name.
+org 100h
+jmp start
+msg: db "Sai Chandhan Ganji", 0Dh, 0Ah, 24h
+start: mov dx, msg 
+mov ah, 09h 
+int 21h 
+mov ah, 0 
+int 16h 
+ret
+Output: Sai Chandhan Ganji
