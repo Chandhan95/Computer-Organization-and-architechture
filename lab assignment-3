@@ -1,0 +1,102 @@
+                                 LAB ASSIGNMENT-3
+                                                                      SAI CHANDHAN GANJI
+                                                                       AP22110010343
+                                                                        CSE-F
+1.Write a program in assembly language to perform subtraction of 8-bit data.
+org 100h
+num1 db 28h
+num2 db 24h
+start:
+mov al, num1 ; moving num1 to al register
+sub al, num2 ; subtracting num2 from al register (i.e., num1 - num2 in al)
+mov bl, al   ; copying al value to bl, storing for the result display
+mov ah, al   ; copying al values to ah (converting upper nibble 4-bit to get character)
+and ah, 0F0h ; mask the lower nibble (i.e., converting lower nibble to 0)
+shr ah, 4    ; shifting right by 4 to get upper nibble
+add ah, 30h  ; converting to ASCII digit
+cmp ah, 39h  ; compare ah value, if it is less than 39h
+jle print_first_digit
+add ah, 7    ; convert to ASCII
+print_first_digit:
+mov dl, ah   ; copying ah value to dl for printing first digit
+mov ah, 02h  ; BIOS interrupt to display character
+int 21h
+; converting lower nibble 4-bit to character
+mov ah, bl   ; copying bl values to ah
+and ah, 0Fh  ; mask the upper nibble (i.e., converting upper nibble to 0)
+add ah, 30h  ; converting to ASCII digit
+cmp ah, 39h  ; compare ah value, if it is less than 39h
+jle print_second_digit
+add ah, 7    ; convert to ASCII
+print_second_digit:
+mov dl, ah   ; copying ah value to dl for printing second digit
+mov ah, 02h  ; BIOS interrupt to display character
+int 21h
+mov ah, 4Ch
+int 21h
+   
+ 
+2. Write an assembly language program to perform subtraction of 16-bit data.
+org 100h
+ num1 dw 1234h ; First 16-bit number
+ num2 dw 1818h ; Second 16-bit number
+start:
+ ; Load the lower bytes of num1 and num2
+ mov ax, num1 ; Load num1 into AX (AX = 1234h)
+ sub ax, num2 ; Add num2 to AX (AX = AX + num2)
+ ; Store the result in BX for later use
+ mov bx, ax ; Copy AX to BX
+ ; Convert upper byte (high 8 bits) to ASCII and display
+ mov al, ah ; Move the high byte of AX to AL
+ and al, 0F0h ; Mask the lower nibble
+ shr al, 4 ; Shift right to get the upper nibble
+ add al, 30h ; Convert to ASCII digit
+ cmp al, 39h ; Compare with ASCII value of '9'
+ jle print_first_digit
+ add al, 7 ; Convert to ASCII letter if needed
+print_first_digit:
+ mov dl, al ; Move AL to DL for printing
+ mov ah, 02h ; BIOS interrupt to display character
+ int 21h
+ ; Convert lower nibble of the high byte to ASCII and display
+ mov al, bh ; Move the high byte of BX to AL again
+ and al, 0Fh ; Mask the upper nibble
+ add al, 30h ; Convert to ASCII digit
+ cmp al, 39h ; Compare with ASCII value of '9'
+ jle print_second_digit
+ add al, 7 ; Convert to ASCII letter if needed
+print_second_digit:
+ mov dl, al ; Move AL to DL for printing
+ mov ah, 02h ; BIOS interrupt to display character
+ int 21h
+ ; Convert upper nibble of the low byte to ASCII and display
+ mov al, bl ; Move the low byte of BX to AL
+ and al, 0F0h ; Mask the lower nibble
+ shr al, 4 ; Shift right to get the upper nibble
+ add al, 30h ; Convert to ASCII digit
+ cmp al, 39h ; Compare with ASCII value of '9'
+ jle print_third_digit
+ add al, 7 ; Convert to ASCII letter if needed
+print_third_digit:
+ mov dl, al ; Move AL to DL for printing
+ mov ah, 02h ; BIOS interrupt to display character
+ int 21h
+ ; Convert lower nibble of the low byte to ASCII and display
+ mov al, bl ; Move the low byte of BX to AL
+ and al, 0Fh ; Mask the upper nibble
+ add al, 30h ; Convert to ASCII digit
+ cmp al, 39h ; Compare with ASCII value of '9'
+ jle print_fourth_digit
+ add al, 7 ; Convert to ASCII letter if needed
+print_fourth_digit:
+ mov dl, al ; Move AL to DL for printing
+ mov ah, 02h ; BIOS interrupt to display character
+ int 21h
+ ; Terminate the program
+ mov ah, 4Ch
+ int 21h
+   
+ 
+
+
+
